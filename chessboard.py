@@ -81,9 +81,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    exit()
 
         # my_chess.draw_board(screen) #comment out the board, this need to put in the start game event
         pygame.display.update()
