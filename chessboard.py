@@ -26,6 +26,7 @@ class chessboard:
         self.col = y
         self.color_row = light
         self.color_col = dark
+        self.run = True
 
     # this function is to draw the board in 8x8 dimension
     # even coordinated blocks are light colored and odd blocks are dark colored
@@ -40,6 +41,19 @@ class chessboard:
                 else:
                     pygame.draw.rect(surface, self.color_col, block)
 
+    def chess_run(self, surface):
+        while self.run:
+            pygame.event.pump()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.run = False
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        exit()
+            self.draw_board(surface)
+            pygame.display.update()
 
 # function for creating buttons with text, may add different event when buttons is clicked
 class buttons:
@@ -59,7 +73,6 @@ class buttons:
         self.button = pygame.Rect(self.x, self.y, self.w, self.h)
 
     def draw_button(self, surface):
-
         mouse = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
 
@@ -84,7 +97,7 @@ class buttons:
         if self.text == "Start":
             # need to connect to go to waiting page for player if only one connection
             # start the game where there are two players
-            chess_loop()
+            my_chess.chess_run(screen)
         elif self.text == "About":
             pass
         elif self.text == "Credit":
@@ -93,7 +106,6 @@ class buttons:
 
 # function for main menu that includes start matching, about, and credit
 def main_menu():
-    # my_chess = chessboard(width, height, light_color, dark_color)
     # main menu background
     background = pygame.transform.scale(pygame.image.load("background_chessboard.jpg").convert(), (width, win_height))
     screen.blit(background, (0, 0))
@@ -106,8 +118,7 @@ def main_menu():
     about.draw_button(screen)
     credit.draw_button(screen)
 
-
-def main_menu_loop():
+def main():
     while True:
         pygame.event.pump()
         main_menu()
@@ -117,21 +128,6 @@ def main_menu_loop():
                 exit()
 
         pygame.display.update()
-
-
-def chess_loop():
-    while True:
-        pygame.event.pump()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    exit()
-        my_chess.draw_board(screen)
-        pygame.display.update()
-
 
 if __name__ == "__main__":
     pygame.init()
@@ -147,4 +143,4 @@ if __name__ == "__main__":
     light_color = pygame.Color("white")
     dark_color = pygame.Color("grey")
     my_chess = chessboard(width, height, light_color, dark_color)
-    main_menu_loop()
+    main()
