@@ -113,10 +113,14 @@ def main_menu():
     start = buttons(180, "Start")
     about = buttons(300, "About")
     credit = buttons(420, "Credit")
+    draw = buttons(540, "Offer draw")
+    resign = buttons(660, "Resign")
 
     start.draw_button(screen)
     about.draw_button(screen)
     credit.draw_button(screen)
+    draw.draw_button(screen)
+    resign.draw_button(screen)
 
 def main():
     while True:
