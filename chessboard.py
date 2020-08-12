@@ -14,7 +14,7 @@
 """
 
 import pygame
-
+from network import Network
 
 class chessboard:
     dimension = 8
@@ -134,6 +134,17 @@ if __name__ == "__main__":
     width = 640
     height = 640
     win_height = height + 40
+
+    run = True
+    n = Network()
+    p = n.getPos()
+    clock = pygame.time.Clock()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+            pygame.quit()
+
 
     # set up the windows, caption, and icon for chess game
     screen = pygame.display.set_mode((width, win_height))
