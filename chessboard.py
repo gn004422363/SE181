@@ -14,6 +14,9 @@
 """
 
 import pygame
+import sys
+sys.path.insert(0, "./SE181_pieces")
+import SE181_samplemain
 from network import Network
 
 class chessboard:
@@ -41,6 +44,21 @@ class chessboard:
                 else:
                     pygame.draw.rect(surface, self.color_col, block)
 
+    # render pieces pic on block
+    def draw_piece(self):
+        for x in range(self.dimension):
+            for y in range(self.dimension):
+                piece = SE181_samplemain.board[x][y]
+                piece_rect = pygame.Rect(y * self.block_size, x * self.block_size + 40, self.block_size, self.block_size)
+                if piece != None:
+                    if piece.color == "Black":
+                        piece_img = pygame.transform.scale(pygame.image.load("images/b" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
+                        screen.blit(piece_img, piece_rect)
+                    else:
+                        piece_img = pygame.transform.scale(pygame.image.load("images/w" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
+                        screen.blit(piece_img, piece_rect)
+
+    # chess game loop
     def chess_run(self, surface):
         while self.run:
             pygame.event.pump()
@@ -53,9 +71,10 @@ class chessboard:
                     if event.key == pygame.K_ESCAPE:
                         exit()
             self.draw_board(surface)
+            self.draw_piece()
             pygame.display.update()
 
-# function for creating buttons with text, may add different event when buttons is clicked
+# class for creating buttons with text, may add different event when buttons is clicked
 class buttons:
     button_size = (220, 80)
     white = (255, 255, 255)
@@ -72,6 +91,7 @@ class buttons:
         self.text = text
         self.button = pygame.Rect(self.x, self.y, self.w, self.h)
 
+    # draw button on main menu
     def draw_button(self, surface):
         mouse = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
@@ -85,6 +105,7 @@ class buttons:
             pygame.draw.rect(surface, self.light_blue, self.button)
             self.button_text()
 
+    # render text on buttons
     def button_text(self):
         text_x = self.x + self.w // 2
         text_y = self.y + self.h // 2
@@ -93,6 +114,7 @@ class buttons:
         title = title_surface.get_rect(center=(text_x, text_y))
         screen.blit(title_surface, title)
 
+    # different button functionalities
     def button_function(self):
         if self.text == "Start":
             # need to connect to go to waiting page for player if only one connection
@@ -107,7 +129,7 @@ class buttons:
 # function for main menu that includes start matching, about, and credit
 def main_menu():
     # main menu background
-    background = pygame.transform.scale(pygame.image.load("background_chessboard.jpg").convert(), (width, win_height))
+    background = pygame.transform.scale(pygame.image.load("images/background_chessboard.jpg").convert(), (width, win_height))
     screen.blit(background, (0, 0))
 
     start = buttons(180, "Start")
@@ -140,8 +162,8 @@ if __name__ == "__main__":
     p = n.getPos()
     clock = pygame.time.Clock()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
             run = False
             pygame.quit()
 
@@ -149,7 +171,7 @@ if __name__ == "__main__":
     # set up the windows, caption, and icon for chess game
     screen = pygame.display.set_mode((width, win_height))
     pygame.display.set_caption("Remote Chess Game")
-    pygame.display.set_icon(pygame.image.load("icon.png"))
+    pygame.display.set_icon(pygame.image.load("images/icon.png"))
 
     light_color = pygame.Color("white")
     dark_color = pygame.Color("grey")
