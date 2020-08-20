@@ -2,6 +2,7 @@
     Project For SE 181
     Group 22
     Ailin Weng
+    Jonah Musto
     Man Tik Li
     Yi Yan
 """
@@ -38,7 +39,7 @@ class chessboard:
     def draw_board(self, surface):
         for x in range(self.dimension):
             for y in range(self.dimension):
-                block = pygame.Rect(x * self.block_size, y * self.block_size + 40, self.block_size, self.block_size)
+                block = pygame.Rect(x * self.block_size, y * self.block_size, self.block_size, self.block_size)
                 if (x + y) % 2 == 0:
                     pygame.draw.rect(surface, self.color_row, block)
                 else:
@@ -49,7 +50,8 @@ class chessboard:
         for x in range(self.dimension):
             for y in range(self.dimension):
                 piece = SE181_samplemain.board[x][y]
-                piece_rect = pygame.Rect(y * self.block_size, x * self.block_size + 40, self.block_size, self.block_size)
+                print(piece)
+                piece_rect = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
                 if piece != None:
                     if piece.color == "Black":
                         piece_img = pygame.transform.scale(pygame.image.load("images/b" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
@@ -60,9 +62,10 @@ class chessboard:
 
     # chess game loop
     def chess_run(self, surface):
+        self.draw_board(surface)
+        self.draw_piece()
         while self.run:
             pygame.event.pump()
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
@@ -70,8 +73,6 @@ class chessboard:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         exit()
-            self.draw_board(surface)
-            self.draw_piece()
             pygame.display.update()
 
 # class for creating buttons with text, may add different event when buttons is clicked
@@ -121,15 +122,40 @@ class buttons:
             # start the game where there are two players
             my_chess.chess_run(screen)
         elif self.text == "About":
-            pass
+            about = True
+            while about:
+                screen.fill((169, 169, 169))
+                about_font = pygame.font.SysFont("arial", 16, True)
+                about_text = about_font.render("Online Chess Game Version 1.0", True, self.white)
+                about_rect = about_text.get_rect(center=(width//2, height//2))
+                screen.blit(about_text, about_rect)
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        about = False
+                        main()
+                    elif event.type == pygame.QUIT:
+                        exit()
         elif self.text == "Credit":
-            pass
-
+            credit = True
+            while credit:
+                screen.fill((169, 169, 169))
+                credit_font = pygame.font.SysFont("arial", 16, True)
+                credit_text = credit_font.render("Dev: Ailin Weng, Jonah Musto, Man Tik Li, Yi Yan", True, self.white)
+                credit_rect = credit_text.get_rect(center=(width // 2, height // 2))
+                screen.blit(credit_text, credit_rect)
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        credit = False
+                        main()
+                    elif event.type == pygame.QUIT:
+                        exit()
 
 # function for main menu that includes start matching, about, and credit
 def main_menu():
     # main menu background
-    background = pygame.transform.scale(pygame.image.load("images/background_chessboard.jpg").convert(), (width, win_height))
+    background = pygame.transform.scale(pygame.image.load("images/background_chessboard.jpg").convert(), (width, height))
     screen.blit(background, (0, 0))
 
     start = buttons(180, "Start")
@@ -148,15 +174,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-
         pygame.display.update()
 
 if __name__ == "__main__":
     pygame.init()
-    pygame.font.init()
     width = 640
     height = 640
-    win_height = height + 40
 
     run = True
     n = Network()
@@ -170,7 +193,7 @@ if __name__ == "__main__":
 
 
     # set up the windows, caption, and icon for chess game
-    screen = pygame.display.set_mode((width, win_height))
+    screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Remote Chess Game")
     pygame.display.set_icon(pygame.image.load("images/icon.png"))
 
