@@ -112,6 +112,10 @@ class King(piece):
 
 				pass
 
+			elif board[temp_x-1][temp_y-1] != None:
+
+				pass
+
 			elif turn_1:
 
 				moveList.append([temp_x,temp_y])
@@ -149,6 +153,14 @@ class King(piece):
 				pass
 
 			elif board[temp_x][temp_y] != None:
+
+				pass
+
+			elif board[temp_x+1][temp_y+1] != None:
+
+				pass
+
+			elif board[temp_x+2][temp_y+2] != None:
 
 				pass
 
