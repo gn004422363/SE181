@@ -76,7 +76,87 @@ class King(piece):
 
 			else:
 
+				pass
+
+
+		for i in moveList:
+
+			if move == i:
+
+				return True
+
+		return False
+	def castleKingside(self, move, turn1, board):
+
+		moveList = []
+		directions = [[0,2]]
+
+		for i in directions:
+
+			check = True
+			temp_x = self.x
+			temp_y = self.y
+
+			temp_x = temp_x + i[0]
+			temp_y = temp_y + i[1]
+
+			if temp_x < 0 or temp_y < 0:
+
+				pass
+
+			elif temp_x > 7 or temp_y > 7:
+
+				pass
+
+			elif board[temp_x][temp_y] != None:
+
+				pass
+
+			elif turn_1:
+
 				moveList.append([temp_x,temp_y])
+			else:
+				pass
+
+
+		for i in moveList:
+
+			if move == i:
+
+				return True
+
+		return False
+	def castleQueenside(self, move, turn1, board):
+
+		moveList = []
+		directions = [[0,-2]]
+
+		for i in directions:
+
+			check = True
+			temp_x = self.x
+			temp_y = self.y
+
+			temp_x = temp_x + i[0]
+			temp_y = temp_y + i[1]
+
+			if temp_x < 0 or temp_y < 0:
+
+				pass
+
+			elif temp_x > 7 or temp_y > 7:
+
+				pass
+
+			elif board[temp_x][temp_y] != None:
+
+				pass
+
+			elif turn_1:
+
+				moveList.append([temp_x,temp_y])
+			else:
+				pass
 
 
 		for i in moveList:
