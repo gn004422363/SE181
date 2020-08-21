@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from SE181_invisible import Invisible
 
 class piece(ABC):
 
@@ -25,6 +26,10 @@ class piece(ABC):
 
 			elif self.attack(move, board):
 
+				if board[move[0]][move[1]].get_type() == "invisible":
+
+					temp = temp[move[0]][move[1]].capture(move, board)
+
 				temp_x = move[0]
 				temp_y = move[1]
 				temp[self.x][self.y], temp[move[0]][move[1]] = temp[move[0]][move[1]], temp[self.x][self.y]
@@ -41,6 +46,17 @@ class piece(ABC):
 
 			if self.validMoves(move, turn_1, board):
 
+				if self.get_type() == "pawn":
+
+					 if self.x + 2 == move[0]:
+
+					 	temp[self.x + 1][self.y] = Invisible("Black",self.get_number,self.x+1,self.y)
+
+					 elif self.x - 2 == move[0]:
+
+					 	temp[self.x - 1][self.y] = Invisible("White",self.get_number,self.x-1,self.y)
+
+
 				temp_x = move[0]
 				temp_y = move[1]
 				temp[self.x][self.y], temp[move[0]][move[1]] = temp[move[0]][move[1]], temp[self.x][self.y]
@@ -55,6 +71,14 @@ class piece(ABC):
 	def get_color(self):
 
 		return self.color
+
+	def get_number(self):
+
+		return self.number
+
+	def get_type(self):
+
+		return self.P_type
 
 	@abstractmethod
 	def validMoves(self, move, turn_1):
