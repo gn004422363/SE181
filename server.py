@@ -5,9 +5,16 @@
 
 import socket
 from _thread import *
+import chessboard
 import sys
 
-server = "192.168.0.9"
+# getting the hostname by socket.gethostname() method
+hostname = socket.gethostname()
+
+# getting the IP address using socket.gethostbyname() method
+ip_address = socket.gethostbyname(hostname)
+
+server = ip_address
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,10 +23,6 @@ try:
     s.bind((server, port))
 except socket.error as e:
     str(e)
-
-s.listen(2)
-print("Waiting for a connection, Server Started")
-
 
 def threaded_client(conn):
     conn.send(str.encode("Connected"))
@@ -30,7 +33,7 @@ def threaded_client(conn):
             reply = data.decode("utf-8")
 
             if not data:
-                print("Disconnected")
+                print(addr, "Disconnected")
                 break
             else:
                 print("Received: ", data)
@@ -43,7 +46,11 @@ def threaded_client(conn):
     print("Lost connection")
     conn.close()
 
+s.listen(2)
+print("The host server: " + server)
+print("Waiting for a connection, Server Started")
 
+# Display server's running status
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
