@@ -60,13 +60,13 @@ board = [[r1,k1,b1,q1,king1,b2,k2,r2],
 
 class move():
 
-    def chicken(self,current_x,current_y,end_x,end_y):
+    def chicken(self,current_x,current_y,end_x,end_y, first_turn=True):
 
         global board
 
         if board[current_x][current_y] != None:
             
-            board = board[current_x][current_y].move([end_x,end_y], True, board)
+            board = board[current_x][current_y].move([end_x,end_y], first_turn, board)
 
 
 # board = q1.move([2,3], False, board)
@@ -82,7 +82,7 @@ class move():
 #     # alignment="ll",
 #     # padding=(0, 1),
 # )
-#
+# 
 # print(string)
 
 

@@ -22,7 +22,7 @@ import SE181_samplemain
 from SE181_samplemain import move
 from network import Network
 
-class chessboard:
+class chessboard():
     dimension = 8
     block_size = 80
 
@@ -52,10 +52,9 @@ class chessboard:
         for x in range(self.dimension):
             for y in range(self.dimension):
                 piece = SE181_samplemain.board[x][y]
-                print(piece)
                 piece_rect = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
                 if piece != None and piece.P_type != "invisible":
-                    if piece.color == "Black":
+                    if piece.color == "Black" and piece.P_type != "invisible":
                         piece_img = pygame.transform.scale(pygame.image.load("images/b" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
                         screen.blit(piece_img, piece_rect)
                     else:
@@ -71,8 +70,7 @@ class chessboard:
         current = False
         current_x = 0
         current_y = 0
-        end_x = 0
-        end_y = 0
+        first = []
         while self.run:
             pygame.event.pump()
             for event in pygame.event.get():
@@ -83,10 +81,8 @@ class chessboard:
                     if event.key == pygame.K_ESCAPE:
                         exit()
                 if event.type == pygame.MOUSEBUTTONUP:
-
                     if not check:
                         check = True
-
                     elif not current:
                         x,y = pygame.mouse.get_pos()
                         current_x = math.floor(y / 80)
@@ -99,14 +95,18 @@ class chessboard:
                         end_y = math.floor(x / 80)
                         print("This is end", end_x, end_y)
                         current = False
-                        dog.chicken(current_x,current_y,end_x,end_y)
+                        piece = SE181_samplemain.board[current_x][current_y]
+                        if piece.number not in first:
+                            first.append(piece.number)
+                            dog.chicken(current_x, current_y, end_x, end_y)
+                        else:
+                            dog.chicken(current_x,current_y,end_x,end_y,False)
                         self.draw_board(surface)
                         self.draw_piece()
-
             pygame.display.update()
 
 # class for creating buttons with text, may add different event when buttons is clicked
-class buttons:
+class buttons():
     button_size = (220, 80)
     white = (255, 255, 255)
     light_blue = (134, 197, 218)
@@ -211,15 +211,15 @@ if __name__ == "__main__":
     width = 640
     height = 640
 
-    run = True
-    n = Network()
-    p = n.getPos()
-    clock = pygame.time.Clock()
-
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            run = False
-            pygame.quit()
+    # run = True
+    # n = Network()
+    # p = n.getPos()
+    # clock = pygame.time.Clock()
+    #
+    # for e in pygame.event.get():
+    #     if e.type == pygame.QUIT:
+    #         run = False
+    #         pygame.quit()
 
 
     # set up the windows, caption, and icon for chess game

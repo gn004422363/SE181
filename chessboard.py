@@ -16,11 +16,13 @@
 
 import pygame
 import sys
+import math
 sys.path.insert(0, "./SE181_pieces")
 import SE181_samplemain
+from SE181_samplemain import move
 from network import Network
 
-class chessboard:
+class chessboard():
     dimension = 8
     block_size = 80
 
@@ -50,10 +52,9 @@ class chessboard:
         for x in range(self.dimension):
             for y in range(self.dimension):
                 piece = SE181_samplemain.board[x][y]
-                print(piece)
                 piece_rect = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
-                if piece != None:
-                    if piece.color == "Black":
+                if piece != None and piece.P_type != "invisible":
+                    if piece.color == "Black" and piece.P_type != "invisible":
                         piece_img = pygame.transform.scale(pygame.image.load("images/b" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
                         screen.blit(piece_img, piece_rect)
                     else:
@@ -64,6 +65,12 @@ class chessboard:
     def chess_run(self, surface):
         self.draw_board(surface)
         self.draw_piece()
+        dog = move()
+        check = False
+        current = False
+        current_x = 0
+        current_y = 0
+        first = []
         while self.run:
             pygame.event.pump()
             for event in pygame.event.get():
@@ -73,10 +80,33 @@ class chessboard:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         exit()
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if not check:
+                        check = True
+                    elif not current:
+                        x,y = pygame.mouse.get_pos()
+                        current_x = math.floor(y / 80)
+                        current_y = math.floor(x / 80)
+                        print("This is current", current_x , current_y)
+                        current = True
+                    else:
+                        x,y = pygame.mouse.get_pos()
+                        end_x = math.floor(y / 80)
+                        end_y = math.floor(x / 80)
+                        print("This is end", end_x, end_y)
+                        current = False
+                        piece = SE181_samplemain.board[current_x][current_y]
+                        if piece.number not in first:
+                            first.append(piece.number)
+                            dog.chicken(current_x, current_y, end_x, end_y)
+                        else:
+                            dog.chicken(current_x,current_y,end_x,end_y,False)
+                        self.draw_board(surface)
+                        self.draw_piece()
             pygame.display.update()
 
 # class for creating buttons with text, may add different event when buttons is clicked
-class buttons:
+class buttons():
     button_size = (220, 80)
     white = (255, 255, 255)
     light_blue = (134, 197, 218)
