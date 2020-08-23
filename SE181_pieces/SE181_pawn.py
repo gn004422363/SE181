@@ -12,7 +12,7 @@ class Pawn(piece):
 
 	def validMoves(self, move, turn_1, board):
 
-		if self.color == "white":
+		if self.color == "White":
 
 			if turn_1 and move[0] == self.x - 2 and move[1] == self.y:
 
@@ -42,7 +42,7 @@ class Pawn(piece):
 
 	def attack(self, move, board):
 
-		if self.color == "white":
+		if self.color == "White":
 
 			if  move[0] == self.x - 1 and (move[1] == self.y + 1 or move[1] == self.y - 1):
 
