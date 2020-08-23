@@ -5,10 +5,16 @@
 
 import socket
 
+# getting the hostname by socket.gethostname() method
+hostname = socket.gethostname()
+
+# getting the IP address using socket.gethostbyname() method
+ip_address = socket.gethostbyname(hostname)
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server = "192.168.0.9"
+        self.server = ip_address
         self.port = 5555
         self.addr = (self.server, self.port)
         self.pos = self.connect()
