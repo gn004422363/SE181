@@ -3,7 +3,7 @@
     Group 22
     Ailin Weng -- Main Menu & Chessboard
     Yi Yan -- Piece Control
-    Jonah Musto -- Piece Control
+    Jonah Musto -- Help with Piece Control
     Man Tik Li -- Server & Client
 """
 
@@ -155,7 +155,7 @@ class buttons():
             while about:
                 screen.fill((169, 169, 169))
                 about_font = pygame.font.SysFont("arial", 16, True)
-                about_text = about_font.render("Online Chess Game Version 1.0", True, self.white)
+                about_text = about_font.render("Online Chess Game Version 0.5", True, self.white)
                 about_rect = about_text.get_rect(center=(width//2, height//2))
                 screen.blit(about_text, about_rect)
                 pygame.display.update()
