@@ -4,7 +4,6 @@
 """
 
 import socket
-import pickle
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -19,20 +18,18 @@ class Network():
         self.port = 5555
         self.addr = (self.server, self.port)
 
+    # Connect client to the server
     def connect(self):
         try:
             self.client.connect(self.addr)
-            return self.client.recv(2048 * 8).decode()
+            return self.client.recv(2048).decode()
         except:
             pass
-
+    # Send signal to server
     def send(self, data):
         try:
-            self.client.send(pickle.dumps(data))
-            reply = self.client.recv(2048 * 8)
-            try:
-                reply = pickle.loads(reply)
-            except Exception as e:
-                print(e)
+            self.client.send(str.encode(data))
+            return self.client.recv(2048)
+
         except socket.error as e:
             print(str(e))
