@@ -212,6 +212,7 @@ if __name__ == "__main__":
 
     run = True
     n = Network()
+    n.connect()
     clock = pygame.time.Clock()
 
     for e in pygame.event.get():

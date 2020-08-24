@@ -4,6 +4,7 @@
 """
 
 import socket
+from _thread import *
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
