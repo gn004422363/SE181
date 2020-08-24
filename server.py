@@ -4,12 +4,6 @@
 """
 
 import socket
-from _thread import *
-from chessboard import chessboard
-import sys
-sys.path.insert(0, "./SE181_pieces")
-import SE181_samplemain
-
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -29,7 +23,6 @@ except socket.error as e:
 
 
 def threaded_client(conn):
-    global currentId, connections
     conn.send(str.encode("Connected"))
 
     while True:
