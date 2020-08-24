@@ -9,6 +9,7 @@ import chessboard
 import sys
 sys.path.insert(0, "./SE181_pieces")
 import SE181_samplemain
+import pickle
 
 
 # getting the hostname by socket.gethostname() method
@@ -29,11 +30,12 @@ except socket.error as e:
 
 def threaded_client(conn):
     conn.send(str.encode("Connected"))
-
+    board = SE181_samplemain.board
     while True:
         try:
             data = conn.recv(2048 * 8)
-            reply = data.decode("utf-8")
+
+            reply = pickle.dumps(board)
 
             if not data:
                 print(addr, "Disconnected")
@@ -42,7 +44,7 @@ def threaded_client(conn):
                 print("Received: ", data)
                 print("Sending : ", reply)
 
-            conn.sendall(str.encode(reply))
+            conn.sendall(reply)
         except:
             break
 

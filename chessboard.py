@@ -25,7 +25,7 @@ from network import Network
 class chessboard():
     dimension = 8
     block_size = 80
-
+    chess = SE181_samplemain.board
     # constructor for building up the board in x/y position with light/dark color
     def __init__(self, x, y, light, dark):
         self.row = x
@@ -51,7 +51,7 @@ class chessboard():
     def draw_piece(self):
         for x in range(self.dimension):
             for y in range(self.dimension):
-                piece = SE181_samplemain.board[x][y]
+                piece = self.chess[x][y]
                 piece_rect = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
                 if piece != None and piece.P_type != "invisible":
                     if piece.color == "Black" and piece.P_type != "invisible":
@@ -63,12 +63,9 @@ class chessboard():
 
     # chess game loop
     def chess_run(self, surface):
-        # self.draw_board(surface)
-        # self.draw_piece()
         dog = move()
         check = False
         current = False
-        turn = False
         current_x = 0
         current_y = 0
         first = []
@@ -84,7 +81,6 @@ class chessboard():
                 if event.type == pygame.MOUSEBUTTONUP:
                     if not check:
                         check = True
-                        
                     elif not current:
                         x,y = pygame.mouse.get_pos()
                         current_x = math.floor(y / 80)
@@ -97,13 +93,15 @@ class chessboard():
                         end_y = math.floor(x / 80)
                         print("This is end", end_x, end_y)
                         current = False
-                        piece = SE181_samplemain.board[current_x][current_y]
+                        piece = self.chess[current_x][current_y]
                         if piece!= None and piece.P_type != "invisible":
                             if piece.number not in first:
                                 first.append(piece.number)
                                 dog.chicken(current_x, current_y, end_x, end_y)
+                                n.send(self.chess)
                             else:
                                 dog.chicken(current_x,current_y,end_x,end_y,False)
+                                n.send(self.chess)
             self.draw_board(surface)
             self.draw_piece()
             pygame.display.update()
