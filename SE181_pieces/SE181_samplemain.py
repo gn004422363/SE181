@@ -66,21 +66,3 @@ class move():
 
         if board[current_x][current_y] != None:
             board = board[current_x][current_y].move([end_x, end_y], first_turn, board)
-
-# board = q1.move([2,3], False, board)
-# board = q1.move([3,3], False, board)
-# board = king1.move([1,3], False, board)
-# board = king1.move([0,4], False, board)
-# board = king1.move([2,2], False, board)
-# board = q1.move([6,7], False, board)
-#
-# string = tt.to_string(
-#     board,
-#     style=tt.styles.ascii_thin_double,
-#     # alignment="ll",
-#     # padding=(0, 1),
-# )
-# 
-# print(string)
-
-
