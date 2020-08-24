@@ -15,3 +15,4 @@ You will need to match the ip address in the Network class with your server
 to connect the client to the server.
 The server and client will be able to send and recieve the chessboard data,
 But will not able to synchronize the piece movement.
+Players can play on one client on different side.
