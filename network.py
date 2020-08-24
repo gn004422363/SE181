@@ -17,10 +17,6 @@ class Network:
         self.server = ip_address
         self.port = 5555
         self.addr = (self.server, self.port)
-        self.pos = self.connect()
-
-    def getPos(self):
-        return self.pos
 
     def connect(self):
         try:

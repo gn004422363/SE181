@@ -5,7 +5,7 @@
 
 import socket
 from _thread import *
-import chessboard
+from chessboard import chessboard
 import sys
 
 # getting the hostname by socket.gethostname() method
@@ -24,9 +24,11 @@ try:
 except socket.error as e:
     str(e)
 
+
 def threaded_client(conn):
+    global currentId, connections
     conn.send(str.encode("Connected"))
-    reply = ""
+
     while True:
         try:
             data = conn.recv(2048)
@@ -37,7 +39,6 @@ def threaded_client(conn):
                 break
             else:
                 print("Received: ", data)
-                print("Sending : ", reply)
 
             conn.sendall(str.encode(reply))
         except:
@@ -45,6 +46,7 @@ def threaded_client(conn):
 
     print("Lost connection")
     conn.close()
+
 
 s.listen(2)
 print("The host server: " + server)
