@@ -26,9 +26,9 @@ class piece(ABC):
 
 			elif self.attack(move, board):
 
-				if board[move[0]][move[1]].get_type() == "invisible":
+				#if board[move[0]][move[1]].get_type() == "invisible":
 
-					temp = temp[move[0]][move[1]].capture(move, board)
+					#temp = temp[move[0]][move[1]].capture(move, board)
 
 				temp_x = move[0]
 				temp_y = move[1]
@@ -46,15 +46,15 @@ class piece(ABC):
 
 			if self.validMoves(move, turn_1, board):
 
-				if self.get_type() == "pawn":
+				#if self.get_type() == "pawn":
 
-					 if self.x + 2 == move[0]:
+					 #if self.x + 2 == move[0]:
 
-					 	temp[self.x + 1][self.y] = Invisible("Black",self.get_number,self.x+1,self.y)
+					 	#temp[self.x + 1][self.y] = Invisible("Black",self.get_number,self.x+1,self.y)
 
-					 elif self.x - 2 == move[0]:
+					 #elif self.x - 2 == move[0]:
 
-					 	temp[self.x - 1][self.y] = Invisible("White",self.get_number,self.x-1,self.y)
+					 	#temp[self.x - 1][self.y] = Invisible("White",self.get_number,self.x-1,self.y)
 
 
 				temp_x = move[0]
