@@ -216,18 +216,12 @@ if __name__ == "__main__":
 
     run = True
     n = Network()
-<<<<<<< HEAD
-    clock = pygame.time.Clock()
-=======
-    p = n.getPos()
     clock = pygame.time.Clock()
 
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             run = False
             pygame.quit()
-
->>>>>>> 4c99634ee6c2f5e9f04e4cb4cf4a70cbdc585f63
 
     # set up the windows, caption, and icon for chess game
     screen = pygame.display.set_mode((width, height))
