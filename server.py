@@ -4,13 +4,6 @@
 """
 
 import socket
-from _thread import *
-import chessboard
-import sys
-sys.path.insert(0, "./SE181_pieces")
-import SE181_samplemain
-import pickle
-
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -28,28 +21,28 @@ try:
 except socket.error as e:
     print(str(e))
 
+
 def threaded_client(conn):
     conn.send(str.encode("Connected"))
-    board = SE181_samplemain.board
+
     while True:
         try:
             data = conn.recv(2048 * 8)
-
-            reply = pickle.dumps(board)
+            reply = data.decode("utf-8")
 
             if not data:
                 print(addr, "Disconnected")
                 break
             else:
                 print("Received: ", data)
-                print("Sending : ", reply)
 
-            conn.sendall(reply)
+            conn.sendall(str.encode(reply))
         except:
             break
 
     print("Lost connection")
     conn.close()
+
 
 s.listen(2)
 print("The host server: " + server)
