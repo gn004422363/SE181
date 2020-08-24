@@ -85,13 +85,11 @@ class chessboard():
                         x,y = pygame.mouse.get_pos()
                         current_x = math.floor(y / 80)
                         current_y = math.floor(x/ 80)
-                        print("This is current", current_x, current_y)
                         current = True
                     else:
                         x,y = pygame.mouse.get_pos()
                         end_x = math.floor(y / 80)
                         end_y = math.floor(x / 80)
-                        print("This is end", end_x, end_y)
                         current = False
                         piece = self.chess[current_x][current_y]
                         if piece!= None and piece.P_type != "invisible":
