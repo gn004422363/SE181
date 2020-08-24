@@ -41,7 +41,7 @@ class chessboard():
     def draw_board(self, surface):
         for x in range(self.dimension):
             for y in range(self.dimension):
-                block = pygame.Rect(y * self.block_size, x * self.block_size + 40, self.block_size, self.block_size)
+                block = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
                 if (x + y) % 2 == 0:
                     pygame.draw.rect(surface, self.color_row, block)
                 else:
@@ -52,7 +52,7 @@ class chessboard():
         for x in range(self.dimension):
             for y in range(self.dimension):
                 piece = SE181_samplemain.board[x][y]
-                piece_rect = pygame.Rect(y * self.block_size, x * self.block_size + 40, self.block_size, self.block_size)
+                piece_rect = pygame.Rect(y * self.block_size, x * self.block_size, self.block_size, self.block_size)
                 if piece != None and piece.P_type != "invisible":
                     if piece.color == "Black" and piece.P_type != "invisible":
                         piece_img = pygame.transform.scale(pygame.image.load("images/b" + type(piece).__name__ + ".png"), (self.block_size, self.block_size))
@@ -87,13 +87,13 @@ class chessboard():
                         
                     elif not current:
                         x,y = pygame.mouse.get_pos()
-                        current_x = math.floor((y - 40) / 80)
+                        current_x = math.floor(y / 80)
                         current_y = math.floor(x/ 80)
                         print("This is current", current_x, current_y)
                         current = True
                     else:
                         x,y = pygame.mouse.get_pos()
-                        end_x = math.floor((y - 40) / 80)
+                        end_x = math.floor(y / 80)
                         end_y = math.floor(x / 80)
                         print("This is end", end_x, end_y)
                         current = False
@@ -188,7 +188,7 @@ class buttons():
 # function for main menu that includes start matching, about, and credit
 def main_menu():
     # main menu background
-    background = pygame.transform.scale(pygame.image.load("images/background_chessboard.jpg").convert(), (width, win_height))
+    background = pygame.transform.scale(pygame.image.load("images/background_chessboard.jpg").convert(), (width, height))
     screen.blit(background, (0, 0))
 
     start = buttons(180, "Start")
@@ -213,7 +213,6 @@ if __name__ == "__main__":
     pygame.init()
     width = 640
     height = 640
-    win_height = 680
 
     run = True
     n = Network()
@@ -227,7 +226,7 @@ if __name__ == "__main__":
 
 
     # set up the windows, caption, and icon for chess game
-    screen = pygame.display.set_mode((width, win_height))
+    screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Remote Chess Game")
     pygame.display.set_icon(pygame.image.load("images/icon.png"))
 
