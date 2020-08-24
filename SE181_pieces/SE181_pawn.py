@@ -54,7 +54,7 @@ class Pawn(piece):
 
 		else:
 
-			if move[0] == self.x + 1 and (move[1] == self.y + 2 or move[1] == self.y - 1):
+			if move[0] == self.x + 1 and (move[1] == self.y + 1 or move[1] == self.y - 1):
 
 				return True
 

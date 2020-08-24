@@ -7,6 +7,9 @@ import socket
 from _thread import *
 from chessboard import chessboard
 import sys
+sys.path.insert(0, "./SE181_pieces")
+import SE181_samplemain
+
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -22,7 +25,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     s.bind((server, port))
 except socket.error as e:
-    str(e)
+    print(str(e))
 
 
 def threaded_client(conn):
@@ -31,7 +34,7 @@ def threaded_client(conn):
 
     while True:
         try:
-            data = conn.recv(2048)
+            data = conn.recv(2048 * 8)
             reply = data.decode("utf-8")
 
             if not data:
