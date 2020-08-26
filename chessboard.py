@@ -96,10 +96,8 @@ class chessboard():
                             if piece.number not in first:
                                 first.append(piece.number)
                                 dog.chicken(current_x, current_y, end_x, end_y)
-                                n.send(self.chess)
                             else:
                                 dog.chicken(current_x,current_y,end_x,end_y,False)
-                                n.send(self.chess)
             self.draw_board(surface)
             self.draw_piece()
             pygame.display.update()
